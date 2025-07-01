@@ -14,6 +14,8 @@ import CustomTextNode from "./components/CustomTextNode";
 import Layout from "./Layout";
 import { handleAddNode } from "./utils/nodes";
 import { MessageSquare } from "lucide-react";
+import Toast from "./common/Toast";
+import { toast } from "react-toastify";
 
 // Register custom node type outside the component to avoid recreation on every render
 const nodeTypes = {
@@ -59,16 +61,17 @@ function App() {
         (node) => !sourceIds.includes(node.id)
       );
       if (noOutgoingNodes.length > 1) {
-        alert("Error: More than one node is missing an outgoing connection.");
+        toast.error("More than one node is missing an outgoing connection.");
         return;
       }
     }
     console.log("Flow saved:", { nodes, edges });
-    alert("Saved successfully! Check console.");
+    toast.success("Saved successfully! Check console.");
   };
 
   return (
     <ReactFlowProvider>
+      <Toast />
       <Layout
         selectedNode={selectedNode}
         setNodes={setNodes}
