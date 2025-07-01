@@ -28,6 +28,7 @@ const Layout: React.FC<LayoutProps> = ({
   onDragOver,
   onDrop,
 }) => {
+  // Memoized callback to handle node deletion and update selected node
   const onNodesDelete = useCallback(
     (deletedNodes: any[]) => {
       if (selectedNode && deletedNodes.some((n) => n.id === selectedNode.id)) {

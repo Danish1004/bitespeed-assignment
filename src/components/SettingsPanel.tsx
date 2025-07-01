@@ -9,17 +9,14 @@ type Props = {
 };
 
 const SettingsPanel = ({ node, setNodes, onClose }: Props) => {
+  // Updates the label of the node in a React-safe way (no direct mutation)
   const updateLabel = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const value = e.target.value;
-
     setNodes((nds) =>
       nds.map((n) =>
         n.id === node.id ? { ...n, data: { ...n.data, label: value } } : n
       )
     );
-
-    // Update selected node directly if needed (optional)
-    node.data.label = value;
   };
 
   return (

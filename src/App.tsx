@@ -14,12 +14,13 @@ import CustomTextNode from "./components/CustomTextNode";
 import Layout from "./Layout";
 import { handleAddNode } from "./utils/nodes";
 
-// Register custom node type
+// Register custom node type outside the component to avoid recreation on every render
 const nodeTypes = {
   textNode: CustomTextNode,
 };
 
 function App() {
+  // State for nodes, edges, and selected node
   const [nodes, setNodes, onNodesChange] = useNodesState<Node[]>([]);
   const [edges, setEdges, onEdgesChange] = useEdgesState<Edge[]>([]);
   const [selectedNode, setSelectedNode] = useState<Node | null>(null);
@@ -55,11 +56,13 @@ function App() {
     alert("Saved successfully! Check console.");
   };
 
+  // Handles drag over event for node drop
   const onDragOver = useCallback((event: React.DragEvent) => {
     event.preventDefault();
     event.dataTransfer.dropEffect = "move";
   }, []);
 
+  // Handles drop event to add a new node
   const onDrop = useCallback(
     (event: React.DragEvent) => {
       event.preventDefault();
