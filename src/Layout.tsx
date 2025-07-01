@@ -24,6 +24,8 @@ const Layout: React.FC<LayoutProps> = ({
   onConnect,
   onNodeClick,
   nodeTypes,
+  onDragOver,
+  onDrop,
 }) => {
   return (
     <div className="h-screen w-screen flex flex-col bg-gray-50">
@@ -31,22 +33,22 @@ const Layout: React.FC<LayoutProps> = ({
       <div className="flex flex-1 h-full">
         <div className="flex-1 flex items-center justify-center">
           <div className="w-full h-[90vh]">
-            <ReactFlowProvider>
-              <ReactFlow
-                nodes={nodes}
-                edges={edges}
-                onNodesChange={onNodesChange}
-                onEdgesChange={onEdgesChange}
-                onConnect={onConnect}
-                onNodeClick={onNodeClick}
-                nodeTypes={nodeTypes}
-                fitView
-              >
-                <MiniMap />
-                <Controls />
-                <Background />
-              </ReactFlow>
-            </ReactFlowProvider>
+            <ReactFlow
+              nodes={nodes}
+              edges={edges}
+              onNodesChange={onNodesChange}
+              onEdgesChange={onEdgesChange}
+              onConnect={onConnect}
+              onNodeClick={onNodeClick}
+              nodeTypes={nodeTypes}
+              fitView
+              onDragOver={onDragOver}
+              onDrop={onDrop}
+            >
+              <MiniMap />
+              <Controls />
+              <Background />
+            </ReactFlow>
           </div>
         </div>
         <div className="w-1/4 flex flex-col items-center  border-l bg-white h-full">

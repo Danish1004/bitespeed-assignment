@@ -4,32 +4,31 @@ import { v4 as uuidv4 } from "uuid";
 export function createNode(
   type: string,
   label: string,
-  extraData: Record<string, any> = {}
+  extraData: Record<string, any> = {},
+  position: { x: number; y: number }
 ): Node {
   return {
     id: uuidv4(),
     type,
     data: { label, ...extraData },
-    position: { x: Math.random() * 400, y: Math.random() * 400 },
-    style: {
-      borderRadius: "8px",
-    },
+    position,
+    style: { borderRadius: "8px" },
   };
 }
 
 export function handleAddNode(
   setNodes: React.Dispatch<React.SetStateAction<Node[]>>,
   type: string,
-  label: string
-) {
-  switch (type) {
-    case "textNode":
-      setNodes((nds) => [...nds, createNode(type, label)]);
-      break;
-    case "actionNode":
-      setNodes((nds) => [...nds, createNode(type, label + " (Action)")]);
-      break;
-    default:
-      setNodes((nds) => [...nds, createNode(type, label)]);
+  label: string,
+  position: { x: number; y: number } = {
+    x: Math.random() * 10,
+    y: Math.random() * 10,
   }
+) {
+  const node =
+    type === "actionNode"
+      ? createNode(type, label + " (Action)", {}, position)
+      : createNode(type, label, {}, position);
+
+  setNodes((nds) => [...nds, node]);
 }

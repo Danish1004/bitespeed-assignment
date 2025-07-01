@@ -22,7 +22,20 @@ const NodesPanel = ({ setNodes }: Props) => {
       {nodeTypes.map((node) => (
         <button
           key={node.type}
-          onClick={() => node.onAdd(setNodes, node.type, node.label)}
+          draggable
+          onDragStart={(event) => {
+            event.dataTransfer.setData(
+              "application/reactflow",
+              JSON.stringify({
+                type: node.type,
+                label: node.label,
+              })
+            );
+            event.dataTransfer.effectAllowed = "move";
+          }}
+          onClick={() =>
+            node.onAdd(setNodes, node.type, node.label, { x: 0, y: 0 })
+          }
           className="border-2 border-primaryBlue text-primaryBlue bg-white px-4 py-2 w-full rounded-lg flex flex-col items-center justify-center font-medium text-lg hover:shadow-md transition-shadow duration-300"
         >
           <span className="mb-2 text-secondary">{node.icon}</span>

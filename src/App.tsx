@@ -7,10 +7,12 @@ import ReactFlow, {
   Connection,
   Edge,
   Node,
+  useReactFlow,
 } from "reactflow";
 import "reactflow/dist/style.css";
 import CustomTextNode from "./components/CustomTextNode";
 import Layout from "./Layout";
+import { handleAddNode } from "./utils/nodes";
 
 // Register custom node type
 const nodeTypes = {
@@ -53,20 +55,48 @@ function App() {
     alert("Saved successfully! Check console.");
   };
 
+  const onDragOver = useCallback((event: React.DragEvent) => {
+    event.preventDefault();
+    event.dataTransfer.dropEffect = "move";
+  }, []);
+
+  const onDrop = useCallback(
+    (event: React.DragEvent) => {
+      event.preventDefault();
+
+      const data = event.dataTransfer.getData("application/reactflow");
+      if (!data) return;
+
+      const { type, label } = JSON.parse(data);
+      const bounds = (event.target as HTMLDivElement).getBoundingClientRect();
+      const position = {
+        x: event.clientX - bounds.left,
+        y: event.clientY - bounds.top,
+      };
+
+      handleAddNode(setNodes, type, label, position);
+    },
+    [setNodes]
+  );
+
   return (
-    <Layout
-      selectedNode={selectedNode}
-      setNodes={setNodes}
-      handleSave={handleSave}
-      nodes={nodes}
-      edges={edges}
-      onNodesChange={onNodesChange}
-      onEdgesChange={onEdgesChange}
-      onConnect={onConnect}
-      onNodeClick={onNodeClick}
-      nodeTypes={nodeTypes}
-      setSelectedNode={setSelectedNode}
-    />
+    <ReactFlowProvider>
+      <Layout
+        selectedNode={selectedNode}
+        setNodes={setNodes}
+        handleSave={handleSave}
+        nodes={nodes}
+        edges={edges}
+        onNodesChange={onNodesChange}
+        onEdgesChange={onEdgesChange}
+        onConnect={onConnect}
+        onNodeClick={onNodeClick}
+        nodeTypes={nodeTypes}
+        setSelectedNode={setSelectedNode}
+        onDrop={onDrop}
+        onDragOver={onDragOver}
+      />
+    </ReactFlowProvider>
   );
 }
 

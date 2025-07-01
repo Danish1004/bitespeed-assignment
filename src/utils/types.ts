@@ -12,4 +12,6 @@ export interface LayoutProps {
   onConnect: (connection: Connection) => void;
   onNodeClick: (event: unknown, node: Node) => void;
   nodeTypes: any;
+  onDragOver: (event: React.DragEvent) => void;
+  onDrop: (event: React.DragEvent) => void;
 }
