@@ -8,6 +8,10 @@ The project demonstrates modern frontend engineering practices, including compon
 
 ---
 
+## Live Implementation
+
+[https://bitespeed-assignment-teal.vercel.app/](https://bitespeed-assignment-teal.vercel.app/)
+
 ## Features Implemented
 
 - **Visual Flow Builder**: Drag-and-drop interface to create and connect nodes representing chatbot steps.
