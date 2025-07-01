@@ -5,21 +5,13 @@ import { MessageSquare } from "lucide-react";
 
 type Props = {
   setNodes: React.Dispatch<React.SetStateAction<Node[]>>;
+  nodeTypeList: any[];
 };
 
-const nodeTypes = [
-  {
-    type: "textNode",
-    label: "Message",
-    icon: <MessageSquare />,
-    onAdd: handleAddNode,
-  },
-];
-
-const NodesPanel = ({ setNodes }: Props) => {
+const NodesPanel = ({ setNodes, nodeTypeList }: Props) => {
   return (
     <div className="grid grid-cols-2 gap-4 w-full py-6 px-4">
-      {nodeTypes.map((node) => (
+      {nodeTypeList.map((node) => (
         <button
           key={node.type}
           draggable
@@ -34,7 +26,10 @@ const NodesPanel = ({ setNodes }: Props) => {
             event.dataTransfer.effectAllowed = "move";
           }}
           onClick={() =>
-            node.onAdd(setNodes, node.type, node.label, { x: 0, y: 0 })
+            node.onAdd(setNodes, node.type, node.label, {
+              x: Math.floor(Math.random() * 500) + 100,
+              y: Math.floor(Math.random() * 300) + 100,
+            })
           }
           className="border-2 border-primaryBlue text-primaryBlue bg-white px-4 py-2 w-full rounded-lg flex flex-col items-center justify-center font-medium text-lg hover:shadow-md transition-shadow duration-300"
         >

@@ -13,11 +13,22 @@ import "reactflow/dist/style.css";
 import CustomTextNode from "./components/CustomTextNode";
 import Layout from "./Layout";
 import { handleAddNode } from "./utils/nodes";
+import { MessageSquare } from "lucide-react";
 
 // Register custom node type outside the component to avoid recreation on every render
 const nodeTypes = {
   textNode: CustomTextNode,
 };
+
+// List of available node types for panel and drag/drop
+const nodeTypeList = [
+  {
+    type: "textNode",
+    label: "Message",
+    icon: <MessageSquare />,
+    onAdd: handleAddNode,
+  },
+];
 
 function App() {
   // State for nodes, edges, and selected node
@@ -56,32 +67,6 @@ function App() {
     alert("Saved successfully! Check console.");
   };
 
-  // Handles drag over event for node drop
-  const onDragOver = useCallback((event: React.DragEvent) => {
-    event.preventDefault();
-    event.dataTransfer.dropEffect = "move";
-  }, []);
-
-  // Handles drop event to add a new node
-  const onDrop = useCallback(
-    (event: React.DragEvent) => {
-      event.preventDefault();
-
-      const data = event.dataTransfer.getData("application/reactflow");
-      if (!data) return;
-
-      const { type, label } = JSON.parse(data);
-      const bounds = (event.target as HTMLDivElement).getBoundingClientRect();
-      const position = {
-        x: event.clientX - bounds.left,
-        y: event.clientY - bounds.top,
-      };
-
-      handleAddNode(setNodes, type, label, position);
-    },
-    [setNodes]
-  );
-
   return (
     <ReactFlowProvider>
       <Layout
@@ -95,9 +80,8 @@ function App() {
         onConnect={onConnect}
         onNodeClick={onNodeClick}
         nodeTypes={nodeTypes}
+        nodeTypeList={nodeTypeList}
         setSelectedNode={setSelectedNode}
-        onDrop={onDrop}
-        onDragOver={onDragOver}
       />
     </ReactFlowProvider>
   );

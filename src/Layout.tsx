@@ -8,6 +8,7 @@ import {
   Background,
   ReactFlow,
   useOnSelectionChange,
+  useReactFlow,
 } from "reactflow";
 import "reactflow/dist/style.css";
 import { LayoutProps } from "./utils/types";
@@ -25,9 +26,10 @@ const Layout: React.FC<LayoutProps> = ({
   onConnect,
   onNodeClick,
   nodeTypes,
-  onDragOver,
-  onDrop,
+  nodeTypeList,
 }) => {
+  const reactFlowInstance = useReactFlow();
+
   // Memoized callback to handle node deletion and update selected node
   const onNodesDelete = useCallback(
     (deletedNodes: any[]) => {
@@ -49,6 +51,36 @@ const Layout: React.FC<LayoutProps> = ({
       [setSelectedNode]
     ),
   });
+
+  // Handles drag over event for node drop
+  const onDragOver = useCallback((event: React.DragEvent) => {
+    event.preventDefault();
+    event.dataTransfer.dropEffect = "move";
+  }, []);
+
+  // Handles drop event to add a new node using flow coordinates
+  const onDrop = useCallback(
+    (event: React.DragEvent) => {
+      event.preventDefault();
+      const data = event.dataTransfer.getData("application/reactflow");
+      if (!data) return;
+      const { type, label } = JSON.parse(data);
+      const flowBounds = (
+        event.target as HTMLDivElement
+      ).getBoundingClientRect();
+      // Calculate position in screen coordinates
+      const position = reactFlowInstance.project({
+        x: event.clientX - flowBounds.left,
+        y: event.clientY - flowBounds.top,
+      });
+      // Find the node type's onAdd handler from nodeTypeList
+      const nodeType = nodeTypeList.find((n: any) => n.type === type);
+      if (nodeType && nodeType.onAdd) {
+        nodeType.onAdd(setNodes, type, label, position);
+      }
+    },
+    [setNodes, nodeTypeList, reactFlowInstance]
+  );
 
   return (
     <div className="h-screen w-screen flex flex-col bg-gray-50">
@@ -83,7 +115,7 @@ const Layout: React.FC<LayoutProps> = ({
               onClose={() => setSelectedNode(null)}
             />
           ) : (
-            <NodesPanel setNodes={setNodes} />
+            <NodesPanel setNodes={setNodes} nodeTypeList={nodeTypeList} />
           )}
         </div>
       </div>
