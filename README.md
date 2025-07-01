@@ -1,70 +1,88 @@
-# Getting Started with Create React App
+# BiteSpeed Frontend Task: Chatbot Flow Builder
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Overview
 
-## Available Scripts
+This project is a **Chatbot Flow Builder** frontend, designed as part of the BiteSpeed Frontend Task. The application allows users to visually create, edit, and manage chatbot conversation flows using a node-based interface. Users can add, connect, and configure different types of nodes to define the logic and structure of a chatbot conversation.
 
-In the project directory, you can run:
+The project demonstrates modern frontend engineering practices, including component-based architecture, state management, and interactive UI design.
 
-### `npm start`
+---
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## Features Implemented
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+- **Visual Flow Builder**: Drag-and-drop interface to create and connect nodes representing chatbot steps.
+- **Node Types**: Support for different node types (e.g., text, question, action) with customizable settings.
+- **Nodes Panel**: Sidebar to add new nodes to the canvas.
+- **Settings Panel**: Edit properties and configuration of selected nodes.
+- **Dynamic Connections**: Create and visualize connections between nodes to define conversation flow.
+- **Persistent State**: Flow state is managed in React and can be extended to support saving/loading.
+- **Reusable Components**: Modular design for easy extension and maintenance.
 
-### `npm test`
+---
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Technologies and Concepts Used
 
-### `npm run build`
+- **React**: For building the user interface with a component-based approach.
+- **TypeScript**: Ensures type safety and better developer experience.
+- **Tailwind CSS**: Utility-first CSS framework for rapid and consistent styling.
+- **React Flow**: For node-based flow rendering and interaction.
+- **Custom Hooks & Utilities**: For state management and logic separation.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+---
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## Key Concepts Demonstrated
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+- **Component-Based Architecture**: UI is broken into reusable, isolated components (e.g., NodesPanel, SettingsPanel, CustomTextNode).
+- **State Management**: Uses React hooks and context to manage the flow state and node properties.
+- **Drag-and-Drop Interaction**: Implements interactive node placement and connection.
+- **Type Safety**: Leverages TypeScript for robust and maintainable code.
+- **Separation of Concerns**: Logic, UI, and utility functions are organized for clarity and scalability.
 
-### `npm run eject`
+---
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+## How to Run the Project
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+1. **Clone the repository:**
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+   ```bash
+   git clone <your-repo-url>
+   cd bitespeed-assignment
+   ```
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+2. **Install dependencies:**
 
-## Learn More
+   ```bash
+   npm install
+   ```
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+3. **Start the development server:**
+   ```bash
+   npm start
+   ```
+   The app will be available at `http://localhost:3000`.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+---
 
-### Code Splitting
+## Folder Structure
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+```
+src/
+  ├── App.tsx                # Main application component
+  ├── index.tsx              # Entry point
+  ├── index.css              # Global styles (Tailwind)
+  ├── common/                # Shared UI components (e.g., Header)
+  ├── components/            # Feature-specific components (e.g., CustomTextNode, NodesPanel, SettingsPanel)
+  ├── utils/                 # Utility functions and TypeScript types
+  └── Layout.tsx             # Layout wrapper for the app
+```
 
-### Analyzing the Bundle Size
+---
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+## Example Usage
 
-### Making a Progressive Web App
+1. **Add Nodes**: Use the Nodes Panel to drag new nodes onto the canvas.
+2. **Connect Nodes**: Click and drag from one node to another to create a connection.
+3. **Edit Node Settings**: Select a node to edit its properties in the Settings Panel.
+4. **Visualize Flow**: The canvas updates in real-time to reflect the current chatbot flow.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+---
