@@ -66,7 +66,7 @@ function App() {
       }
     }
     console.log("Flow saved:", { nodes, edges });
-    toast.success("Saved successfully! Check console.");
+    toast.success("Saved successfully!");
   };
 
   return (
