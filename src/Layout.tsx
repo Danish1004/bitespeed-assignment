@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback } from "react";
 import NodesPanel from "./components/NodesPanel";
 import SettingsPanel from "./components/SettingsPanel";
 import {
@@ -7,6 +7,7 @@ import {
   Controls,
   Background,
   ReactFlow,
+  useOnSelectionChange,
 } from "reactflow";
 import "reactflow/dist/style.css";
 import { LayoutProps } from "./utils/types";
@@ -27,6 +28,27 @@ const Layout: React.FC<LayoutProps> = ({
   onDragOver,
   onDrop,
 }) => {
+  const onNodesDelete = useCallback(
+    (deletedNodes: any[]) => {
+      if (selectedNode && deletedNodes.some((n) => n.id === selectedNode.id)) {
+        setSelectedNode(null);
+      }
+    },
+    [selectedNode, setSelectedNode]
+  );
+
+  // Close settings panel if nothing is selected
+  useOnSelectionChange({
+    onChange: useCallback(
+      ({ nodes }) => {
+        if (!nodes.length) {
+          setSelectedNode(null);
+        }
+      },
+      [setSelectedNode]
+    ),
+  });
+
   return (
     <div className="h-screen w-screen flex flex-col bg-gray-50">
       <Header onSave={handleSave} />
@@ -44,6 +66,7 @@ const Layout: React.FC<LayoutProps> = ({
               fitView
               onDragOver={onDragOver}
               onDrop={onDrop}
+              onNodesDelete={onNodesDelete}
             >
               <MiniMap />
               <Controls />

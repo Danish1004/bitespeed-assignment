@@ -10,7 +10,7 @@ const Header: React.FC<HeaderProps> = ({ onSave }) => (
     <div className="absolute inset-0 pointer-events-none rounded-lg bg-gradient-to-tr from-blue-200 via-purple-100 to-orange-100 opacity-60" />
     <button
       onClick={onSave}
-      className="relative w-36 border-2 border-primaryBlue bg-white text-primaryBlue py-2 rounded z-10 text-sm font-semibold shadow-md hover:shadow-xl transition-all duration-300"
+      className="relative w-36 border-2 border-primaryBlue bg-white text-primaryBlue py-2 rounded-md z-10 text-sm font-semibold shadow-md hover:shadow-xl transition-all duration-300"
     >
       Save Changes
     </button>
