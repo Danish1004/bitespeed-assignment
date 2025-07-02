@@ -33,10 +33,10 @@ const nodeTypeList = [
 ];
 
 function App() {
-  // State for nodes, edges, and selected node
+  // State for nodes, edges, and selected node id
   const [nodes, setNodes, onNodesChange] = useNodesState<Node[]>([]);
   const [edges, setEdges, onEdgesChange] = useEdgesState<Edge[]>([]);
-  const [selectedNode, setSelectedNode] = useState<Node | null>(null);
+  const [selectedNodeId, setSelectedNodeId] = useState<string | null>(null);
 
   // Called when user connects two nodes
   const onConnect = useCallback(
@@ -50,7 +50,7 @@ function App() {
 
   // When user clicks a node, open settings panel
   const onNodeClick = useCallback((_: unknown, node: Node) => {
-    setSelectedNode(node);
+    setSelectedNodeId(node.id);
   }, []);
 
   // Save button logic with validation
@@ -73,7 +73,7 @@ function App() {
     <ReactFlowProvider>
       <Toast />
       <Layout
-        selectedNode={selectedNode}
+        selectedNodeId={selectedNodeId}
         setNodes={setNodes}
         handleSave={handleSave}
         nodes={nodes}
@@ -84,7 +84,7 @@ function App() {
         onNodeClick={onNodeClick}
         nodeTypes={nodeTypes}
         nodeTypeList={nodeTypeList}
-        setSelectedNode={setSelectedNode}
+        setSelectedNodeId={setSelectedNodeId}
       />
     </ReactFlowProvider>
   );

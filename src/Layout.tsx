@@ -15,9 +15,9 @@ import { LayoutProps } from "./utils/types";
 import Header from "./common/Header";
 
 const Layout: React.FC<LayoutProps> = ({
-  selectedNode,
+  selectedNodeId,
   setNodes,
-  setSelectedNode,
+  setSelectedNodeId,
   handleSave,
   nodes,
   edges,
@@ -30,14 +30,17 @@ const Layout: React.FC<LayoutProps> = ({
 }) => {
   const reactFlowInstance = useReactFlow();
 
+  // Find the selected node from the nodes array
+  const selectedNode = nodes.find((n) => n.id === selectedNodeId) || null;
+
   // Memoized callback to handle node deletion and update selected node
   const onNodesDelete = useCallback(
     (deletedNodes: any[]) => {
-      if (selectedNode && deletedNodes.some((n) => n.id === selectedNode.id)) {
-        setSelectedNode(null);
+      if (selectedNodeId && deletedNodes.some((n) => n.id === selectedNodeId)) {
+        setSelectedNodeId(null);
       }
     },
-    [selectedNode, setSelectedNode]
+    [selectedNodeId, setSelectedNodeId]
   );
 
   // Close settings panel if nothing is selected
@@ -45,10 +48,10 @@ const Layout: React.FC<LayoutProps> = ({
     onChange: useCallback(
       ({ nodes }) => {
         if (!nodes.length) {
-          setSelectedNode(null);
+          setSelectedNodeId(null);
         }
       },
-      [setSelectedNode]
+      [setSelectedNodeId]
     ),
   });
 
@@ -112,7 +115,7 @@ const Layout: React.FC<LayoutProps> = ({
             <SettingsPanel
               node={selectedNode}
               setNodes={setNodes}
-              onClose={() => setSelectedNode(null)}
+              onClose={() => setSelectedNodeId(null)}
             />
           ) : (
             <NodesPanel setNodes={setNodes} nodeTypeList={nodeTypeList} />

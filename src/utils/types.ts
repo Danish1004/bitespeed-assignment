@@ -1,8 +1,8 @@
 import { Node, Edge, Connection } from "reactflow";
 
 export interface LayoutProps {
-  selectedNode: Node | null;
-  setSelectedNode: React.Dispatch<React.SetStateAction<Node | null>>;
+  selectedNodeId: string | null;
+  setSelectedNodeId: React.Dispatch<React.SetStateAction<string | null>>;
   setNodes: React.Dispatch<React.SetStateAction<Node[]>>;
   handleSave: () => void;
   nodes: Node[];
